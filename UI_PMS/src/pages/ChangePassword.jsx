@@ -4,52 +4,67 @@ import { useNavigate } from "react-router-dom";
 import { FaInfoCircle } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useMyStore } from "../store/myStore";
 
-const Login = () => {
-    let [email, setEmail] = useState('');
+const ChangePassword = () => {
+    let [newPassword, setNewPassword] = useState('');
     let [password, setPassword] = useState('');
+    let [newHide, setNewHide] = useState(false);
     let [hide, setHide] = useState(false);
     const navigation = useNavigate();
-    let [initialEmail, setInitialEmail] = useState(true);
+    let [initialNewPassword, setInitialNewPassword] = useState(true);
     let [initialPassword, setInitialPassword] = useState(true);
+    const {userid} = useMyStore();
 
-    const signInUser = async () => {
+    const changePassword = async () => {
         try {
-            if (!email || !password)
+            if (!newPassword || !password)
             {
                 clearForm();
                 return;
             }
 
-            let { data: t_sys_users, error } = await supabase
-                .from('t_sys_users')
-                .select('*').eq('email', email).eq('password', password)
+            if (newPassword != password)
+            {
+                clearForm();
+                return;
+            }
+           
+            const { data: t_sys_users, error } = await supabase
+            .from('t_sys_users')
+            .update({ password: password })
+            .eq('id', userid)
+            .select();
 
             if (error) {
                 throw error
             }
 
             if (t_sys_users.length > 0) {
-                console.log('Login Successfull')
-                navigation('/workspace');
+                console.log('Password Change Successfull')
+                navigation('/');
             } else {
-                console.log('Login Failed')
+                console.log('Password Change Failed')
             }
 
         } catch (ex) {
-            console.log('Error Occurred At signInUser: ' + ex.message);
+            console.log('Error Occurred At changePassword: ' + ex.message);
         } finally {
             clearForm();
         }
     }
 
     const clearForm = () => {
-        setEmail("");
+        setNewPassword("");
         setPassword("");
     }
 
     const togglePasswordVisibility = () => {
         setHide(prev => !prev); // Toggle hide state to show/hide password
+    }
+
+    const newTogglePasswordVisibility = () => {
+        setNewHide(prev => !prev); // Toggle hide state to show/hide password
     }
 
     return (
@@ -59,28 +74,51 @@ const Login = () => {
             </div>
             <div style={{ width: '50%', height: '100vh', padding: 100, display: 'flex', justifyContent: 'start', alignItems: 'start', flexDirection: 'column' }}>
                 <div>
-                    <h2 style={{ fontSize: 36 }}>Welcome Back</h2>
-                    <p style={{ color: '#00000062' }}>Sign in to your account</p>
+                    <h2 style={{ fontSize: 36 }}>Forgot Password</h2>
+                    <p style={{ color: '#00000062' }}>Change your password</p>
                 </div>
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '22px', marginTop: 60 }}>
-                    <div style={{ width: '80%', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <label htmlFor="">Your Email</label>
-                        <input value={email} onChange={(e) => {setEmail(e.target.value); (e.target.value.length > 0 && setInitialEmail(false))}} placeholder="Enter your Email" type="text" style={{ paddingInline: 12, paddingBlock: 12, borderRadius: 8, border: '2px solid rgba(0, 0, 0, 0.13)' }} />
+                    <div style={{ width: '80%', display: 'flex', flexDirection: 'column', gap: '6px'}}>
+                        <label htmlFor="">New Password</label>
+                        <div style={{position:'relative'}}>
+                            <input
+                            value={newPassword}
+                            onChange={(e) => {setNewPassword(e.target.value); (e.target.value.length > 0 && setInitialNewPassword(false))}}
+                            placeholder="New Password"
+                            type={newHide ? "text" : "password"} 
+                            style={{ paddingLeft: 12, paddingRight:32 ,paddingBlock: 12, width: '100%', borderRadius: 8, border: '2px solid rgba(0, 0, 0, 0.13)' }}
+                            />
+                            <button
+                                onClick={newTogglePasswordVisibility}
+                                style={{
+                                    position: 'absolute',
+                                    right: 12,
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    border: 'none',
+                                    backgroundColor: 'transparent',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {newHide ? <FaRegEye /> : <FaRegEyeSlash />} 
+                            </button>
+                        </div>
                         {
-                            !initialEmail && email.length === 0 &&
+                            !initialNewPassword && newPassword.length === 0 &&
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                 <FaInfoCircle color="red" />
-                                <p style={{ color: 'red' }}>Please enter email</p>
+                                <p style={{ color: 'red' }}>Please enter new password</p>
                             </div>
                         }
                     </div>
+
                     <div style={{ width: '80%', display: 'flex', flexDirection: 'column', gap: '6px'}}>
                         <label htmlFor="">Password</label>
                         <div style={{position:'relative'}}>
                             <input
                             value={password}
                             onChange={(e) => {setPassword(e.target.value); (e.target.value.length > 0 && setInitialPassword(false))}}
-                            placeholder="Enter your Password"
+                            placeholder="Confirm Password"
                             type={hide ? "text" : "password"} 
                             style={{ paddingLeft: 12, paddingRight:32 ,paddingBlock: 12, width: '100%', borderRadius: 8, border: '2px solid rgba(0, 0, 0, 0.13)' }}
                             />
@@ -103,25 +141,19 @@ const Login = () => {
                             !initialPassword && password.length === 0 &&
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                 <FaInfoCircle color="red" />
-                                <p style={{ color: 'red' }}>Please enter password</p>
+                                <p style={{ color: 'red' }}>Please enter confirm password</p>
                             </div>
                         }
                     </div>
-                    <div style={{ width: '80%', display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                        <a href="#" onClick={(e) => {e.preventDefault; navigation('/changepassword')}} style={{ color: '#00000062', textDecoration: 'none', marginTop: '-4px' }}>Forgot Password ?</a>
-                    </div>
+                  
                     <div style={{ width: '80%', display: 'flex', marginTop: 12, flexDirection: 'column', gap: '6px' }}>
-                        <button onClick={() => signInUser()} style={{ paddingInline: 8, fontSize: 16, paddingBlock: 12, color: 'white', backgroundColor: 'black', borderRadius: 8, border: '2px solid rgb(0, 0, 0)' }}>Submit</button>
+                        <button onClick={() => changePassword()} style={{ paddingInline: 8, fontSize: 16, paddingBlock: 12, color: 'white', backgroundColor: 'black', borderRadius: 8, border: '2px solid rgb(0, 0, 0)' }}>Change Password</button>
                     </div>
 
-                    <div style={{ width: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20, gap: '6px' }}>
-                        <p style={{ color: '#00000062' }}>Don't have an account?</p>
-                        <a href="#" style={{ color: 'black', fontWeight: 600, textDecoration: 'none' }}>Register</a>
-                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Login;
+export default ChangePassword;
