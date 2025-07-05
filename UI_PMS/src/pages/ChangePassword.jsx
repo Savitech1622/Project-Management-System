@@ -18,8 +18,9 @@ const ChangePassword = () => {
 
     const changePassword = async () => {
         try {
-            if (!newPassword || !password)
+            if (newPassword.length == 0 || password.length == 0)
             {
+                showVal();
                 clearForm();
                 return;
             }
@@ -27,6 +28,7 @@ const ChangePassword = () => {
             if (newPassword != password)
             {
                 clearForm();
+                showVal();
                 return;
             }
            
@@ -52,6 +54,11 @@ const ChangePassword = () => {
         } finally {
             clearForm();
         }
+    }
+
+    const showVal = () => {
+        setInitialNewPassword(false);
+        setInitialPassword(false);
     }
 
     const clearForm = () => {

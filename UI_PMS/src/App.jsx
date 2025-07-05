@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import { Route, Router, Routes } from 'react-router-dom';
 import Workspace from './pages/Workspace';
 import ChangePassword from './pages/ChangePassword';
+import Register from './pages/Register';
 function App() {
  
   let [title, setTitle] = useState('')
@@ -28,6 +29,7 @@ function App() {
         <Route path='/' element={<Login/>}/>
         <Route path='/workspace' element = {<Workspace />}/>
         <Route path='/changepassword' element = {<ChangePassword />}/>
+        <Route path='/register' element = {<Register />}/>
      </Routes>
     </>
   )
