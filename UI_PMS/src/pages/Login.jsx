@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { supabase } from "../../supabaseConfig";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
+    const navigation = useNavigate();
 
     const signInUser = async() => {
         try 
@@ -15,6 +17,7 @@ const Login = () => {
             if(t_sys_users.length > 0)
             {
                 console.log('Login Successfull')
+                navigation('/workspace');
             }
             else{
                 console.log('Login Failed')

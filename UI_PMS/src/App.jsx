@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../supabaseConfig';
 import { useMyStore } from './store/myStore';
 import Login from './pages/Login';
+import { Route, Router, Routes } from 'react-router-dom';
+import Workspace from './pages/Workspace';
 function App() {
  
   let [title, setTitle] = useState('')
@@ -21,7 +23,10 @@ function App() {
 
   return (
     <>
-     <Login />
+     <Routes>
+        <Route path='/' element={<Login/>}/>
+        <Route path='/workspace' element = {<Workspace />}/>
+     </Routes>
     </>
   )
 }
