@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabaseConfig';
 import { useMyStore } from './store/myStore';
+import Login from './pages/Login';
 function App() {
  
   let [title, setTitle] = useState('')
@@ -20,7 +21,7 @@ function App() {
 
   return (
     <>
-     <h2>{title}</h2>
+     <Login />
     </>
   )
 }
