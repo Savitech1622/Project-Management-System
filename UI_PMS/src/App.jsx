@@ -9,6 +9,8 @@ import ChangePassword from './pages/ChangePassword';
 import Register from './pages/Register';
 import OrgDetails from './pages/OrgDetails';
 import Organizations from './pages/Organizations';
+import OrgDetailsTeam from './pages/OrgDetails';
+import TeamDetails from './pages/TeamDetails';
 function App() {
  
   let [title, setTitle] = useState('')
@@ -34,7 +36,8 @@ function App() {
          <Route path="/" element={<Workspace />}>
             <Route path="/workspace" element={<Organizations />} />
             <Route path="/workspace/org/:orgId" element={<OrgDetails />} />  
-        </Route>
+            <Route path="/workspace/org/:orgId/team/:teamId" element={<TeamDetails />} />  
+         </Route>
         <Route path='/changepassword' element = {<ChangePassword />}/>
         <Route path='/register' element = {<Register />}/>
      </Routes>

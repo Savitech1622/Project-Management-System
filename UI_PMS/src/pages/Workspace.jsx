@@ -178,8 +178,21 @@ const Workspace = () => {
                 </button>
               </div>
             </div>
+
             <div style={{display:'flex', width:'100%'}}>
-              <Outlet />
+              {/* sidenav */}
+              { !showTitle && 
+                <div style={{width:'72px', height:'100vh', opacity:.7, borderInlineEnd:'1px solid rgba(0,0,0,0.11', display:'flex', flexDirection:'column', alignItems:'center', gap:32, marginTop:62}}>
+                  <IoGrid size={28}/>
+                  <MdSpaceDashboard size={28}/>
+                  <RiTeamFill size={28}/>
+                  <IoIosSettings size={28}/>
+                </div>
+              }
+              {/* mainwindow */}
+              <div style={{width:'100%'}}>
+                  <Outlet />
+              </div>
             </div>
         </div>
     )
