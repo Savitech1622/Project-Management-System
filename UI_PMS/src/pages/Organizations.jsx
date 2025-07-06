@@ -14,10 +14,8 @@ import { supabase } from "../../supabaseConfig";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { Outlet } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 
-const Workspace = () => {
+const Organizations = () => {
     let [orgList, setOrgList] = useState([]);
     let [loading, setLoading] = useState(false);
     let [popup, setPopup] = useState(false);
@@ -26,11 +24,9 @@ const Workspace = () => {
     let [search, setSearch] = useState('');
     let [refresh, setRefresh] = useState(0);
     const navigate = useNavigate();
-    const location = useLocation();
-    const showTitle = location.pathname === '/workspace';
 
     // const {userid, refresh, setRefresh} = useMyStore();
-    const {userid, orgTitle, setOrgTitle, clearOrgTitle, collegeName} = useMyStore();
+    const {userid, setOrgTitle} = useMyStore();
 
     useEffect(() => {
       getOrgData();
@@ -114,14 +110,14 @@ const Workspace = () => {
         org.orgname.toLowerCase().includes(search.toLowerCase())
     )
 
-    const handleOrgClick = (orgId) => {
+    const handleOrgClick = (orgId, orgName) => {
+      setOrgTitle(orgName);
       navigate(`/workspace/org/${orgId}`);
     };
 
     return (
         <div style={{width:'100%', height:'100vh'}}>
-
-            {/* popup start */}
+              {/* popup start */}
             {popup && <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%',position:'absolute', zIndex:99, height:'100vh', backgroundColor:'#00000036', backdropFilter:'blur(2px)'}}>
                   <div style={{width:'40%', height:'500px', borderRadius:'12px', position:'relative', boxShadow:'0 0 2px #00000036', backgroundColor:'white'}}>
                       <div style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingBlock:'22px', paddingInline:'22px', borderBottom:'1px solid #00000036'}}>
@@ -156,33 +152,39 @@ const Workspace = () => {
               </div>
               }
             {/* popup end */}
-
-            {/* navbar */}
-            <div style={{paddingInline:'24px', width:'100%', height:'60px', borderBlockEnd:'1px solid rgba(0, 0, 0, 0.11)', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-              <div>
-                  { (!showTitle && orgTitle != '') && <div style={{display:'flex', alignItems:'center', gap:'4px'}}>
-                    <SiFiles color="black" size={22}/>
-                    <p style={{fontSize:'14px', fontWeight:600}}>{orgTitle}</p>
-                    <p style={{marginInline:'2px', paddingInline:'8px', paddingBlock:'4px', borderRadius:'12px', fontSize:'12px', marginTop:'2px', color:'#00000086', border:'1px solid #00000036'}}>{collegeName}</p>
-                  </div>
-                  }
-              </div>
-              <div style={{display:'flex', justifyContent:'center', alignItems:'center', paddingInline:'8px', gap:'6px'}}>
-                <div style={{marginBlock:'4px', boxShadow:'0 1px 4px rgba(0, 0, 0, 0.3)', fontSize:'12px', color:'white', background:'purple', fontWeight:600, width:'36px', height:'36px', border:'2px solid #ffffff', borderRadius:'120', display:'flex', justifyContent:'center', alignItems:'center', borderRadius:'120px'}}>YR</div>
-                <div>
-                  <p style={{fontSize:'14px'}}>Yash Raghuvanshi</p>
-                </div>
-                  <p style={{marginInline:'2px', backgroundColor:'purple', paddingInline:'8px', paddingBlock:'4px', borderRadius:'12px', fontSize:'12px', marginTop:'2px', color:'#ffffff'}}>Admin</p>
-                <button style={{border:'none', background:'none', cursor:'pointer'}}>
-                  <FaAngleDown size={16} color="#00000096"/>
-                </button>
-              </div>
-            </div>
             <div style={{display:'flex', width:'100%'}}>
-              <Outlet />
+              <div style={{width:'100%'}}>
+                  <div style={{paddingInline:60, paddingTop:24}}>
+                    <h2 style={{fontSize:24}}>Your Organizations</h2>
+
+                    <div style={{marginTop:'12px', gap:'8px', display:'flex'}}>
+                      <button onClick={() => setPopup(true)}  style={{paddingInline:'20px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}}>Create New Organization</button>
+                      <div style={{position:'relative'}}>
+                        <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search Here..." style={{width:'320px', paddingLeft:'28px', paddingRight:'12px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}} />
+                        <CiSearch color="#00000090" style={{position:'absolute', left:8, top:'36%'}}/>
+                      </div>
+                    </div>
+
+                    <div style={{display:'flex', flexWrap:'wrap', gap:'12px', marginTop:'12px'}}>
+                      {
+                        filteredOrg?.map((val, ind) => {
+                          return (
+                            <>
+                              <div onClick={() => handleOrgClick(val.id, val.orgname)} style={{cursor:'pointer'}}>
+                                <OrgCard title={val.orgname} count={val.teamcount}/>
+                              </div>
+                            </>
+                          )
+                        })
+                      }
+                    </div>
+
+                  </div>
+
+              </div>
             </div>
         </div>
     )
 }
 
-export default Workspace
+export default Organizations

@@ -7,6 +7,8 @@ import { Route, Router, Routes } from 'react-router-dom';
 import Workspace from './pages/Workspace';
 import ChangePassword from './pages/ChangePassword';
 import Register from './pages/Register';
+import OrgDetails from './pages/OrgDetails';
+import Organizations from './pages/Organizations';
 function App() {
  
   let [title, setTitle] = useState('')
@@ -23,11 +25,16 @@ function App() {
     getData();
   }, [])
 
+
+
   return (
     <>
      <Routes>
         <Route path='/' element={<Login/>}/>
-        <Route path='/workspace' element = {<Workspace />}/>
+         <Route path="/" element={<Workspace />}>
+            <Route path="/workspace" element={<Organizations />} />
+            <Route path="/workspace/org/:orgId" element={<OrgDetails />} />  
+        </Route>
         <Route path='/changepassword' element = {<ChangePassword />}/>
         <Route path='/register' element = {<Register />}/>
      </Routes>
