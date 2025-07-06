@@ -118,6 +118,11 @@ const Workspace = () => {
       navigate(`/workspace/org/${orgId}`);
     };
 
+    const handleUserClick = (orgId) => {
+      navigate(`/workspace/org/${orgId}/manageuser`);
+    };
+
+
     return (
         <div style={{width:'100%', height:'100vh'}}>
 
@@ -182,12 +187,16 @@ const Workspace = () => {
             <div style={{display:'flex', width:'100%'}}>
               {/* sidenav */}
               { !showTitle && 
-                <div style={{width:'72px', height:'100vh', opacity:.7, borderInlineEnd:'1px solid rgba(0,0,0,0.11', display:'flex', flexDirection:'column', alignItems:'center', gap:32, marginTop:62}}>
-                  <IoGrid size={28}/>
-                  <MdSpaceDashboard size={28}/>
-                  <RiTeamFill size={28}/>
-                  <IoIosSettings size={28}/>
-                </div>
+                <div style={{width:'72px', height:'100vh', opacity:.7, borderInlineEnd:'1px solid rgba(0,0,0,0.11', display:'flex', flexDirection:'column', alignItems:'center', gap:32, paddingTop:62}}>
+                    {/* <IoGrid size={28}/>
+                    <MdSpaceDashboard size={28}/> */}
+                    <div onClick={() => handleUserClick()} style={{cursor:'pointer'}}>
+                      <RiTeamFill size={28}/>
+                    </div>
+                    <div>
+                      <IoIosSettings size={28}/>
+                    </div>
+                  </div>
               }
               {/* mainwindow */}
               <div style={{width:'100%'}}>
