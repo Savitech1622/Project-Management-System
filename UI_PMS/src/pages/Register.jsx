@@ -68,7 +68,7 @@ const Register = () => {
     }
 
     return (
-        <div style={{ width: '100%', height: '100vh', backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%', height: '100vh', backgroundColor: '#ffffff', display: 'flex', justifyContent: 'center'}}>
             <div style={{ width: '50%', height: '100vh' }}>
                 <img src="https://cdn.wallpapersafari.com/52/98/5oPLsu.jpg" style={{ width: '100%', height: '100vh', objectFit: 'cover' }} alt="bg" />
             </div>

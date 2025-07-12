@@ -5,7 +5,7 @@ import { FaCrown } from "react-icons/fa6";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 
 
-const ProjectCard = ({title = 'Project Batch 2025', count = 4, status = 1, lastupdated = new Date()}) => {
+const ProjectCard = ({title = 'Project Batch 2025', count = 4, status = 1, lastupdated = new Date(), guidename = 'no guide assigned'}) => {
     return (
         <div style={{boxShadow:'0 2px 12px rgba(0, 0, 0, 0.08)', width:'450px', display:'flex', marginBlock:'8px', gap:'12px', paddingInline:'12px', paddingBlock:'24px', border:'1px solid #00000036', borderRadius:'12px', alignItems:'center'}}>
             <div style={{border:'2px solid #00000036', borderRadius:120, width:'48px', height:'48px', display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -22,9 +22,9 @@ const ProjectCard = ({title = 'Project Batch 2025', count = 4, status = 1, lastu
             </div>
 
             <div style={{display:'flex', gap:'12px', alignItems:'center'}}>
-                <div style={{color:'#00000080', display:'flex', alignItems:'center', gap:'4px', marginTop:'8px'}}>
-                    <FaCrown size={12}/>
-                    <p style={{fontSize:12}}>Ashish Patil</p>
+                <div style={{color:'#00000080', display:'flex', alignItems:'center', gap:'4px', marginTop:'8px',  backgroundColor:'#80008016', borderRadius:'8px', paddingInline:'6px', paddingBlock:'2px'}}>
+                    <FaCrown size={12} color="purple"/>
+                    <p style={{fontSize:12, color:'purple'}}>{guidename}</p>
                 </div>
                 <div style={{color:'#00000080', display:'flex', alignItems:'center', gap:'4px', marginTop:'8px'}}>
                     <FaCircle size={2}/>
