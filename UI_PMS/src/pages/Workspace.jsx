@@ -27,7 +27,7 @@ const Workspace = () => {
     let [refresh, setRefresh] = useState(0);
     const navigate = useNavigate();
     const location = useLocation();
-    const showTitle = location.pathname === '/workspace';
+    const showTitle = location.pathname === '/workspace' || location.pathname === '/workspace/manageuser';
 
     // const {userid, refresh, setRefresh} = useMyStore();
     const {userid, orgTitle, setOrgTitle, clearOrgTitle, collegeName} = useMyStore();
@@ -190,9 +190,9 @@ const Workspace = () => {
                 <div style={{width:'72px', height:'100vh', opacity:.7, borderInlineEnd:'1px solid rgba(0,0,0,0.11', display:'flex', flexDirection:'column', alignItems:'center', gap:32, paddingTop:62}}>
                     {/* <IoGrid size={28}/>
                     <MdSpaceDashboard size={28}/> */}
-                    <div onClick={() => handleUserClick()} style={{cursor:'pointer'}}>
+                     {/* <div onClick={() => handleUserClick()} style={{cursor:'pointer'}}>
                       <RiTeamFill size={28}/>
-                    </div>
+                    </div> */}
                     <div>
                       <IoIosSettings size={28}/>
                     </div>

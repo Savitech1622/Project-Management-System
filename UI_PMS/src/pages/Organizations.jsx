@@ -115,11 +115,15 @@ const Organizations = () => {
       navigate(`/workspace/org/${orgId}`);
     };
 
+    const handleUserClick = (orgId) => {
+      navigate(`/workspace/manageuser`);
+    };
+
     return (
         <div style={{width:'100%', height:'100vh'}}>
               {/* popup start */}
-            {popup && <div style={{display:'flex', justifyContent:'center', alignItems:'center', width:'100%',position:'absolute', zIndex:99, height:'100vh', backgroundColor:'#00000036', backdropFilter:'blur(2px)'}}>
-                  <div style={{width:'40%', height:'500px', borderRadius:'12px', position:'relative', boxShadow:'0 0 2px #00000036', backgroundColor:'white'}}>
+            {popup && <div style={{display:'flex', justifyContent:'center', alignItems:'start', width:'100%',position:'absolute', zIndex:99, height:'100vh', backgroundColor:'#00000036', backdropFilter:'blur(2px)'}}>
+                  <div style={{width:'40%', height:'500px', borderRadius:'12px', marginTop:48, position:'relative', boxShadow:'0 0 2px #00000036', backgroundColor:'white'}}>
                       <div style={{width:'100%', display:'flex', justifyContent:'space-between', alignItems:'center', paddingBlock:'22px', paddingInline:'22px', borderBottom:'1px solid #00000036'}}>
                         <h2 style={{fontSize:24}}>Create Organizations</h2>
                         <button onClick={() => {setPopup(false); setInitialOrgName(true)}} style={{border:'none', cursor:'pointer', background:'none'}}>
@@ -157,15 +161,18 @@ const Organizations = () => {
                   <div style={{paddingInline:60, paddingTop:24}}>
                     <h2 style={{fontSize:24}}>Your Organizations</h2>
 
-                    <div style={{marginTop:'12px', gap:'8px', display:'flex'}}>
-                      <button onClick={() => setPopup(true)}  style={{paddingInline:'20px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}}>Create New Organization</button>
-                      <div style={{position:'relative'}}>
-                        <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search Here..." style={{width:'320px', paddingLeft:'28px', paddingRight:'12px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}} />
-                        <CiSearch color="#00000090" style={{position:'absolute', left:8, top:'36%'}}/>
+                    <div style={{marginTop:'12px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom: '1px solid rgba(0, 0, 0, 0.10)', paddingBottom:'16px'}}>
+                      <div style={{gap:'8px', display:'flex'}}>
+                        <button onClick={() => setPopup(true)}  style={{paddingInline:'20px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}}>Create New Organization</button>
+                        <div style={{position:'relative'}}>
+                          <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search Here..." style={{width:'320px', paddingLeft:'28px', paddingRight:'12px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}} />
+                          <CiSearch color="#00000090" style={{position:'absolute', left:8, top:'36%'}}/>
+                        </div>
                       </div>
+                      <button onClick={() => handleUserClick()} style={{paddingInline:'20px', paddingBlock:'12px', border:'1px solid #00000036', borderRadius:'10px', boxShadow:'0 2px 2px rgba(0, 0, 0, 0.05)', marginBlock:'8px', cursor:'pointer'}}>Manage User</button>
                     </div>
 
-                    <div style={{display:'flex', flexWrap:'wrap', gap:'12px', marginTop:'12px'}}>
+                    <div style={{display:'flex', flexWrap:'wrap', gap:'12px', marginTop:'20px'}}>
                       {
                         filteredOrg?.map((val, ind) => {
                           return (

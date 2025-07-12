@@ -109,8 +109,8 @@ const OrgDetails = () => {
   return (
     <div style={{ width: '100%', height: '100vh' }}>
       {/* popup start */}
-      {popup && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', position: 'absolute', zIndex: 99, height: '100vh', backgroundColor: '#00000036', backdropFilter: 'blur(2px)' }}>
-        <div style={{ width: '40%', height: '500px', borderRadius: '12px', position: 'relative', boxShadow: '0 0 2px #00000036', backgroundColor: 'white' }}>
+      {popup && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'start', width: '100%', position: 'absolute', zIndex: 99, height: '100vh', backgroundColor: '#00000036', backdropFilter: 'blur(2px)' }}>
+        <div style={{ width: '40%', height: '500px', borderRadius: '12px', marginTop:48,marginLeft:-52,  position: 'relative', boxShadow: '0 0 2px #00000036', backgroundColor: 'white' }}>
           <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBlock: '22px', paddingInline: '22px', borderBottom: '1px solid #00000036' }}>
             <h2 style={{ fontSize: 24 }}>Create Team</h2>
             <button onClick={() => { setPopup(false); setInitialProjectName(true) }} style={{ border: 'none', cursor: 'pointer', background: 'none' }}>

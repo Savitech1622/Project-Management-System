@@ -37,7 +37,7 @@ function App() {
          <Route path="/" element={<Workspace />}>
             <Route path="/workspace" element={<Organizations />} />
             <Route path="/workspace/org/:orgId" element={<OrgDetails />} />  
-            <Route path="/workspace/org/:orgId/manageuser" element={<UserManagement />} />  
+            <Route path="/workspace/manageuser" element={<UserManagement />} />  
             <Route path="/workspace/org/:orgId/team/:teamId" element={<TeamDetails />} />  
          </Route>
         <Route path='/changepassword' element = {<ChangePassword />}/>
