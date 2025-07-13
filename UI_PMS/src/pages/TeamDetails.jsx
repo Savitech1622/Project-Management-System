@@ -40,9 +40,11 @@ const TeamDetails = () => {
     let [projectDetails, setProjectDetails] = useState({});
     let [guideDetails, setGuideDetails] = useState({});
     let [memberDetails, setMemberDetails] = useState([]);
+    let [taskList, setTaskList] = useState([]);
 
     useEffect(() => {
       getTeamDetailsData();
+      getTaskDetailsData();
     }, [refresh]);
 
 
@@ -122,7 +124,42 @@ const TeamDetails = () => {
       {
         setLoading(false);
       }
-      
+    }
+
+    const getTaskDetailsData = async() => {
+      try
+      {
+        setLoading(true);
+        
+        let { data: t_sys_task, error } = await supabase
+          .from('t_sys_task')
+          .select(`*, username: assigned_to(id, name)`).eq('team_id', teamId);
+          
+        if(error)
+        {
+          setLoading(false);
+          throw error;
+        }
+
+        if(t_sys_task.length > 0)
+        {
+          console.log(t_sys_task)
+          setTaskList(t_sys_task);
+        }
+        else
+        {
+          setTaskList([]);
+        }
+
+      }
+      catch(ex)
+      {
+        console.log('Error Occured At getTaskDetailsData: '+ex.message);
+      }
+      finally
+      {
+        setLoading(false);
+      }
     }
 
     return (
@@ -172,10 +209,24 @@ const TeamDetails = () => {
                   <div style={{paddingInline:60, paddingTop:24}}>
                       <h2 style={{fontSize:16, color:'#00000092'}}>Tasks: 10</h2>
                       <div style={{marginTop: 12 }}>
-                        <TaskCard />
-                        <BugCard />
-                        <TestCard />
-                        <ReportCard />
+                      {
+                        taskList.map((val, ind) => {
+                          switch(val.task_type)
+                          {
+                            case 'Code':
+                              return <TaskCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              break;
+                            case 'Bug':
+                              return <BugCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              break;
+                            case 'Test':
+                              return <TestCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              break;
+                            default :
+                              return <ReportCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                          }
+                        })
+                      }
                       </div>
                   </div>
                   
