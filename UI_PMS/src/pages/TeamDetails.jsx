@@ -162,8 +162,37 @@ const TeamDetails = () => {
       }
     }
 
+    let [showDetails, setShowDetail] = useState(false);
+
     return (
         <div style={{width:'100%', height:'90vh', overflowY:'scroll'}}>
+
+        {showDetails &&
+          <div style={{width:'100%', height:'100vh', backgroundColor:'#00000075', position:'absolute', zIndex:33, top:0, left:0, display: 'flex', justifyContent:'end'}}>
+            <div style={{width:'40%', height:'100vh', backgroundColor:'white', zIndex:'50'}}>
+              
+              <div style={{width:'100%', display:'flex', justifyContent:'end', alignItems:'center', paddingBlock:'16px', paddingInline:'22px', borderBottom:'1px solid #00000036'}}>
+                <button onClick={() => setShowDetail(false)} style={{border:'none', cursor:'pointer', background:'none'}}>
+                  <IoCloseSharp size={22}/>
+                </button>
+              </div>
+
+              <div style={{width:'100%', display:'flex', flexDirection:'column', marginBlock:'8px', gap:'48px', paddingInline:'32px', paddingBlock:'20px'}}>
+                <div>
+                    <p style={{fontSize:'18px', fontWeight:500}}>🎉Login Page</p>
+                    <div style={{color:'#00000070', display:'flex', alignItems:'center', gap:'4px', marginTop:'12px'}}>
+                        <FaRegUser size={12}/>
+                        <p style={{fontSize:12}}>Yash Raghuvanshi</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            </div>
+          </div>
+        }
+
             <div style={{display:'flex', width:'100%'}}>
               {/* mainwindow */}
               <div style={{width:'100%'}}>
@@ -214,16 +243,40 @@ const TeamDetails = () => {
                           switch(val.task_type)
                           {
                             case 'Code':
-                              return <TaskCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              return (
+                                <>
+                                <div onClick={() => setShowDetail(true)} style={{cursor:'pointer'}}>
+                                  <TaskCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                                </div>
+                              </>
+                              )
                               break;
                             case 'Bug':
-                              return <BugCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              return (
+                                <>
+                                <div onClick={() => setShowDetail(true)} style={{cursor:'pointer'}}>
+                                  <BugCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                                </div>
+                              </>
+                              )
                               break;
                             case 'Test':
-                              return <TestCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              return (
+                                <>
+                                <div onClick={() => setShowDetail(true)} style={{cursor:'pointer'}}>
+                                  <TestCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                                </div>
+                              </>
+                              )
                               break;
                             default :
-                              return <ReportCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                              return (
+                                 <>
+                                <div onClick={() => setShowDetail(true)} style={{cursor:'pointer'}}>
+                                  <ReportCard tasktitle = {val.task_title} assignedto = {val.username.name} taskstatus = {val.task_status} guideremark = {val.guide_remark} progress = {val.progress}/>
+                                </div>
+                              </>
+                              )
                           }
                         })
                       }
